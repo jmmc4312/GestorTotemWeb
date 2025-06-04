@@ -1,0 +1,101 @@
+{% extends '../index_master.html' %}
+
+{% block content %}
+<div class="right_col" role="main">
+    <h1>Actualizar Curso</h1>
+    <form action="{% url 'actualizarCursos' %}" method="POST">
+        {% csrf_token %}
+
+
+        <div class="form-group row">
+            <label class="col-4 col-form-label" for="rut">Código</label>
+            <div class="col-8">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            <i class="fa fa-id-card" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                    <select name="codigo" id="codigo" onchange="actualizarCampos()">
+                        <option value="" selected>Seleccione Curso</option>
+                        {% for c in cursos %}
+                            <option value="{{ c.codigo }}">{{ c.codigo }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="nombre" class="col-3 col-form-label">Nombre</label>
+            <div class="col-9">
+                <input id="nombre" name="nombre" type="text" required="required" class="form-control">
+            </div>
+        </div>
+
+        
+        <div class="form-group row">
+            <label class="col-3 col-form-label" for="docente">Docente Asignado</label>
+            <div class="col-9">
+                <select id="docente" name="docente" class="form-control" required="required">
+                    {% for c in cursos %}
+                        <option value="{{ c.docente.nombre }}">{{ c.docente.nombre }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        
+        <div class="form-group row">
+            <label for="codigosecc" class="col-3 col-form-label">Sección</label>
+            <div class="col-9">
+                <input id="codigosecc" name="codigosecc" type="text" class="form-control" required="required">
+            </div>
+        </div>
+        
+        <div class="form-group row">
+            <div class="offset-3 col-9">
+                <button name="submit" type="submit" class="btn btn-primary">Actualizar Curso</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    function actualizarCampos() {
+        var seleccion = document.getElementById("codigo");
+        var codigoSeleccionado = seleccion.value;
+    
+        console.log('codigo seleccionado:', codigoSeleccionado);
+    
+        // Verificar si se ha seleccionado "Seleccione Curso"
+        if (codigoSeleccionado === "") {
+            return;
+        }
+    
+        // Realizar una solicitud AJAX para obtener los detalles del curso
+        fetch(`/obtener_detalle_curso/${codigoSeleccionado}/`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('La solicitud no fue exitosa');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Imprime los datos en la consola para verificar que se obtuvieron correctamente
+                console.log('Datos del curso:', data);
+    
+                // Actualizar los campos del formulario con la información del curso seleccionado
+                document.getElementById("nombre").value = data.nombre;
+    
+                // Actualizar el select de docente
+                var docenteSelect = document.getElementById("docente");
+                docenteSelect.value = data.docente;
+    
+                // Actualizar el select de sección
+                var codigoseccSelect = document.getElementById("codigosecc");
+                codigoseccSelect.value = data.codigosecc;
+            })
+            .catch(error => console.error('Error:', error));
+    }
+    
+    
+</script>
+{% endblock %}

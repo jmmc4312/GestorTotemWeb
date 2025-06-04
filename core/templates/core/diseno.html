@@ -1,0 +1,184 @@
+{%extends 'core/base.html' %}
+{%load static%}
+{%block content%}
+<!-- Sección general de Diseño de Tótem-->
+
+<section id="diseno-section" class="banner">
+    <img src="{% static 'core/img/impresora3d.png'%}" alt="" class="banner__img">
+
+</section>
+
+<form action="{% url 'agregarTotemsDocente' %}" method="POST"  enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <main class="main">
+
+        <!-- Sección de Imagen  -->
+        <section class="group--color">
+
+            <div class="container">
+                <label for="imagen" class="main__title">Imagen</label>
+                <div class="diseño-totem">
+                    <img id="uploaded-image" src="" alt=".">
+                    <div class="file-upload">
+                        <input type="file" name="imagen" id="imagen" accept="image/*" class="form-control-file">
+                    </div>   
+                </div>
+                
+            </div>
+
+        </section>
+
+        <!-- Sección de Código UNICO, primary key  -->
+        <section class="group--color">
+            
+            <div class="container">
+                <label for="row">Fecha de expiración:</label>
+                    <div class="col-8">
+                      <input id="fecha_expiracion" name="fecha_expiracion" type="date" required="required" class="form-control">
+                    </div>
+                <h2 class="main__title">Generar Código Único</h2>
+                <div class="random-number">
+                    <div id="hint-text" class="hint-text">xxx-xxx-xxx</div><br>
+                    <!-- Agrega un campo de entrada para el código -->
+                    <input type="text" id="codigo" name="codigo" class="form-control" placeholder="Código único" readonly>
+                    <button class="subeDiseno" id="generate-button" type="button">Generar</button>
+                </div>
+            </div>
+        </section>
+        
+    </main>
+    <hr class="mb-4">
+
+<!-- Sección general de Curso y Alumno-->
+    <section id="ramos-section" class="banner2">
+        <img src="{% static 'core/img/ramoBnr.png'%}" alt="" class="banner__img">
+    </section>
+    <main class="main">
+        <section class="group our-team">
+            <h2 class="group__title">Asignaturas</h2>
+        </section>
+        <!-- Seleccion de Curso y Sección -->
+        <div class="container">
+            <div class="row">
+                <!-- Primer contenedor para Cursos -->
+                <div class="col-md-6">
+                    <div class="card-2">
+                        <div class="row listado-cursos">
+                            <div class="table-responsive py-2">
+                                <h2>Sus Cursos:</h2>
+                                <table class="table table-striped">
+                                    <tbody>
+                                        <tr>
+                                            <label for="row">Seleccione:</label>
+                                            <select id="curso" name="curso" class="custom-select" required="required">
+                                                <option value="....."></option>
+                                                {% for curso in cursos %}
+                                                <option value="{{ curso.codigo }}">{{ curso.nombre }} - {{ curso.codigosecc }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Segundo contenedor para Alumnos -->
+                <div class="col-md-6">
+                    <div class="card-2">
+                        <div class="row listado-cursos">
+                            <div class="table-responsive py-2">
+                                <h2>Sus Alumnos:</h2>
+                                <table class="table table-striped">
+                                    <tbody>
+                                        <tr>
+                                            <label for="row">Seleccione:</label>
+                                            <select id="alumno" name="alumno" class="custom-select" required="required">
+                                                <option value="....."></option>
+                                                {% for alumno in alumnos %}
+                                                <option value="{{ alumno.rut }}">{{ alumno.nombre }} - {{ alumno.rut }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+              
+    <hr class="mb-4">
+
+
+<!-- Sección general de Asignación de Beneficio-->
+
+    <section id="asigna-section" class="banner2">
+        <img src="{% static 'core/img/beneficioBnr.png' %}" alt="" class="banner__img">
+    </section>
+
+    <section class="group our-team"><h2 class="group__title">Asignación de Beneficio Estudiantil</h2></section>
+
+      <main class="main">
+        <div class="container">
+          <h4 class="d-flex justify-content-between align-items-center mb-3"><span class="text-muted"></span></h4>
+          <div class="row">
+            {% for beneficio in beneficios %}
+              <div class="col-md-4 mb-4">
+                <div class="card fixed-height-card {% if beneficio.seleccionado %}seleccionado{% endif %}">
+                  <div class="card-container">
+                    <div class="card-body">
+                      <h5 class="card-title">{{ beneficio.titulo }}</h5>
+                      {% if beneficio.imagen and beneficio.imagen.url %}
+                        <img src="{{ beneficio.imagen.url }}" class="card-img-top" alt="{{ beneficio.titulo }}" style="max-height: 200px; object-fit: contain; border-radius: 10px;">
+                      {% else %}
+                        <p>No hay imagen disponible</p>
+                      {% endif %}
+                      <p class="card-text">{{ beneficio.descripcion }}</p>
+                      
+                    </div>
+                    <div class="card-buttons">
+                        <input type="hidden" id="beneficio" name="beneficio" value="">
+                        <button type="button" class="btn btn-secondary" onclick="seleccionarBeneficio(this, '{{ beneficio.id }}')">Seleccionar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+        <!-- Sección de Motivo personal  -->
+        <div class="containercontacto">
+          <div class="formulario">
+    
+              <label for="motivo" style="color: black;">Motivo:</label>
+              <textarea style="border: 3px solid black;" id="motivo" name="motivo" rows="6" required></textarea>
+              <!-- Botón final que envia el FORM -->
+              <button name="submit" type="submit" class="btn btn-success" onsubmit="submitFormulario(event)">Guardar Tótem</button>
+
+  
+          </div>
+        </div>
+      </main>
+
+
+
+</form>
+<hr class="mb-4">
+
+
+
+
+{%endblock%}
+{%block footer%}{%endblock%}
+
+
+</body>
+</html>
+

@@ -1,0 +1,52 @@
+{%extends '../index_master.html' %}
+
+{%block content%}
+
+<div class="right_col" role="main">
+    <h1>Listar Totems</h1>
+    <div class="table-responsive">
+        <table class="table table-hover border-warning">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Código</th>
+              <th scope="col">Beneficio</th>
+              <th scope="col">Alumno</th>
+              <th scope="col">Docente Asignador</th>
+              <th scope="col">Curso</th>
+              <th scope="col">Sección</th>
+              <th scope="col">Motivo</th>
+              <th scope="col">Fecha de Creación</th>
+              <th scope="col">Fecha de Vencimiento</th>
+              <th scope="col">Imagen</th>              
+            </tr>
+          </thead>
+          <tbody>
+            {% for t in totems %}
+              <tr>
+                  <th scope="row">{{ forloop.counter }}</th>
+                  <td>{{ t.codigo }}</td>
+                  <td>{{ t.beneficio.titulo }}</td>
+                  <td>{{ t.alumno.nombre }}</td>
+                  <td>{{ t.docente.nombre }}</td>
+                  <td>{{ t.curso.nombre }}</td>
+                  <td>{{ t.curso.codigosecc }}</td>
+                  <td>{{ t.motivo }}</td>
+                  <td>{{ t.fecha_creacion }}</td>
+                  <td>{{ t.fecha_expiracion }}</td>
+                  <td>
+                      {% if t.imagen %}
+                          <img src="{{ t.imagen.url }}" alt="Imagen del beneficio" style="max-width: 100px; max-height: 100px;">
+                      {% else %}
+                          Sin imagen
+                      {% endif %}
+                  </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+      
+        </table>
+    </div>
+</div>
+
+{%endblock%}

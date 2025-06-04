@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Login ingreso intranet</title>
+	
+	<link rel="stylesheet" type="text/css" href="{% static 'core/css/login.css' %}">
+	
+</head>
+<body >
+	
+	<div class="main">
+		
+		<div class="main">
+			<input type="checkbox" id="chk" aria-hidden="true">
+			<div class="signup">
+			  <form id="registroForm">
+				<label for="chk" aria-hidden="true">Registro</label>
+				<input type="text" id="Rut" name="txt" placeholder="Rut" required>
+				<input type="email" id="Email" name="email" placeholder="Email" required>
+				<input type="password" id="Password" name="pswd" placeholder="Clave" required>
+				<button type="submit" id="ingresa">Ingresar</button>
+			  </form>
+			</div>
+			<!-- login ↓ -->
+			<div class="login">
+			  <form id="log">
+				<label for="chk" aria-hidden="true">Login</label>
+				<input type="text" id="rutlog" name="Rut" placeholder="Rut" required>
+				<input type="password" id="pswdlog" name="pswdLog" placeholder="Clave" required>
+				<button type="submit" id="ingresaLog">¡Logeate!</button>
+			  </form>
+			</div>
+		  </div>
+		<!-- Cambia script href a script src -->
+	
+	<script src="{%static 'core/js/login.js' %}"></script>
+</body>
+</html>

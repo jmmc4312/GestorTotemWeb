@@ -1,0 +1,38 @@
+{%extends '../index_master.html' %}
+
+{%block content%}
+
+<div class="right_col" role="main">
+    <h1>Eliminar Totem</h1>
+    <form action="{% url 'eliminarTotems' %}" method="POST">
+      {% csrf_token %}
+
+
+        <div class="form-group row">
+          <label class="col-4 col-form-label" for="nombre">ID</label> 
+          <div class="col-8">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text">
+                  <i class="fa fa-id-card" aria-hidden="true"></i>
+                </div>
+              </div> 
+              
+              <select name="id" id="id">
+                  {% for t in totems %}
+                  <option value="{{t.codigo}}" {% if t.codigo == totem.codigo %}selected{% endif %}>{{t.codigo}}</option>
+                  {% endfor %}
+              </select>
+              
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-group row">
+          <div class="offset-4 col-8">
+            <button name="submit" type="submit" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i> Eliminar Tótem</button>
+          </div>
+        </div>
+    </form>
+</div>
+{%endblock%}

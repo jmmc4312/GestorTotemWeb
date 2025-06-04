@@ -1,0 +1,96 @@
+{% extends 'core/index_master.html' %}
+{%load static%}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'core/css/index.css'%}"/>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<div class="right_col" role="main">
+  
+    <div class="container" id="container">
+      <div class="form-container validator-container">
+        <form action="{% url 'validar_totem' %}" method="POST" id="validar_totem">
+          {% csrf_token %}
+
+          <h1>Tótem</h1>
+          <div class="social-container">
+            <h5>Ingrese los dígitos al reverso del Tótem:</h5>
+          </div>
+
+          <div class="code-input-container">
+            <div class="code-input-section">
+                <input type="text" maxlength="3" placeholder="XXX" name="code_part1" />
+            </div>
+            <span class="code-input-divider">-</span>
+            <div class="code-input-section">
+                <input type="text" maxlength="3" placeholder="XXX" name="code_part2" />
+            </div>
+            <span class="code-input-divider">-</span>
+            <div class="code-input-section">
+                <input type="text" maxlength="3" placeholder="XXX" name="code_part3" />
+            </div>            
+          </div>
+          <button type="submit">Validar</button>
+        </form>
+      </div>
+      <div class="overlay-container">
+        <div class="overlay">
+            <div class="overlay-panel overlay-right">
+                <div class="table-responsive">
+
+                    <table class="table table-hover border-warning">
+
+                        <tr>
+                            <th>Código</th>
+                            <td>{{ totem_data.codigo }}</td>
+                        </tr>
+                        <tr>
+                            <th>Beneficio</th>
+                            <td>{{ totem_data.beneficio }}</td>
+                        </tr>
+                        <tr>
+                            <th>Alumno</th>
+                            <td>{{ totem_data.alumno }}</td>
+                        </tr>
+                        <tr>
+                            <th>Docente</th>
+                            <td>{{ totem_data.docente }}</td>
+                        </tr>
+                        <tr>
+                            <th>Curso</th>
+                            <td>{{ totem_data.curso }}</td>
+                        </tr>
+                        <tr>
+                            <th>Sección</th>
+                            <td>{{ totem_data.seccion }}</td>
+                        </tr>
+                        <tr>
+                            <th>Fecha de Creación</th>
+                            <td>{{ totem_data.fecha_creacion }}</td>
+                        </tr>
+                        <tr>
+                            <th>Fecha de Vencimiento</th>
+                            <td>{{ totem_data.fecha_vencimiento }}</td>
+                        </tr>
+                        <tr>
+                            <th>Imagen</th>
+                            <td>
+                                {% if totem_data.imagen %}
+                                    <img src="{{ totem_data.imagen }}" alt="Totem Image">
+                                {% else %}
+                                    No image available
+                                {% endif %}
+                            </td>
+
+                        </tr>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    </div>
+  
+</div>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends '../index_master.html' %}
+
+{% block content %}
+
+<div class="right_col" role="main">
+    <h1>Listar Beneficios</h1>
+    <div class="table-responsive">
+        <table class="table table-hover border-warning">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Titulo</th>
+              <th scope="col">Descripción</th>
+              <th scope="col">Requisitos</th>
+              <th scope="col">Imagen</th> 
+            </tr>
+          </thead>
+          <tbody>
+            {% for b in beneficios %}
+              <tr>
+                  <th scope="row">{{ forloop.counter }}</th>
+                  <td>{{ b.titulo }}</td>
+                  <td>{{ b.descripcion }}</td>
+                  <td>{{ b.requisitos }}</td>
+                  <td>
+                      {% if b.imagen %}
+                          <img src="{{ b.imagen.url }}" alt="Imagen del beneficio" style="max-width: 100px; max-height: 100px;">
+                      {% else %}
+                          Sin imagen
+                      {% endif %}
+                  </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

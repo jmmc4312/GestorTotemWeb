@@ -1,0 +1,79 @@
+{% extends '../index_master.html' %}
+
+{% block content %}
+<div class="right_col" role="main">
+  <h1>Agregar Tótem</h1>
+  <form action="{% url 'agregarTotems' %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+      <div class="form-group row">
+        <label for="codigo" class="col-4 col-form-label">Código</label>
+        <div class="col-8">
+          <input id="codigo" name="codigo" type="text" class="form-control" required="required">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="motivo" class="col-4 col-form-label">Motivo</label>
+        <div class="col-8">
+          <textarea id="motivo" name="motivo" cols="40" rows="5" class="form-control" required="required"></textarea>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="fecha_expiracion" class="col-4 col-form-label">Fecha de expiración</label>
+        <div class="col-8">
+          <input id="fecha_expiracion" name="fecha_expiracion" type="date" required="required" class="form-control">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="docente" class="col-4 col-form-label">Docente</label>
+        <div class="col-8">
+          <select id="docente" name="docente" class="custom-select" required="required">
+            {% for docente in docentes %}
+              <option value="{{ docente.rut }}">{{ docente.nombre }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="curso" class="col-4 col-form-label">Curso</label>
+        <div class="col-8">
+          <select id="curso" name="curso" class="custom-select" required="required">
+            {% for curso in cursos %}
+              <option value="{{ curso.codigo }}">{{ curso.nombre }} - {{ curso.codigosecc }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="alumno" class="col-4 col-form-label">Alumno</label>
+        <div class="col-8">
+          <select id="alumno" name="alumno" class="custom-select" required="required">
+            {% for alumno in alumnos %}
+              <option value="{{ alumno.rut }}">{{ alumno.nombre }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="beneficio" class="col-4 col-form-label">Beneficio</label>
+        <div class="col-8">
+          <select id="beneficio" name="beneficio" class="custom-select" required="required">
+            {% for beneficio in beneficios %}
+              <option value="{{ beneficio.id }}">{{ beneficio.titulo }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="imagen" class="col-3 col-form-label">Imagen</label>
+        <div class="col-9">
+            <input type="file" name="imagen" accept="image/*" class="form-control-file">
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="offset-4 col-8">
+          <button name="submit" type="submit" class="btn btn-success">Guardar Tótem</button>
+        </div>
+      </div>
+  </form>
+</div>
+{% endblock %}

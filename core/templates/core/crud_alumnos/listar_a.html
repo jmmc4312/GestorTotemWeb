@@ -1,0 +1,33 @@
+{%extends '../index_master.html' %}
+
+{% block content %}
+<div class="right_col" role="main">
+    <h1>Listar Alumnos</h1>
+    <div class="table-responsive">
+        <table class="table table-hover border-warning">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">RUT</th>
+              <th scope="col">Correo Electrónico</th>
+              <th scope="col">Carrera</th>
+            </tr>
+          </thead>
+          <tbody>
+                {% for a in alumnos %}
+                <tr>
+                  <th scope="row">{{ forloop.counter }}</th>
+                  <td>{{ a.nombre }}</td>
+                  <td>{{ a.rut }}</td>
+                  <td>{{ a.email }}</td>
+                  <td>{{ a.carrera }}</td>
+                </tr>
+                {% endfor %}
+          </tbody>
+      
+        </table>
+    </div>
+</div>
+
+{%endblock%}

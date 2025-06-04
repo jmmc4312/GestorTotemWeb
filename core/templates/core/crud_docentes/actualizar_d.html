@@ -1,0 +1,121 @@
+{% extends '../index_master.html' %}
+
+{% block content %}
+<div class="right_col" role="main">
+    <h1>Actualizar Docente</h1>
+    <form id="actualizarDocentes" method="POST" action="{% url 'actualizarDocentes' %}">
+        {% csrf_token %}
+
+        <div class="form-group row">
+          <label class="col-4 col-form-label" for="rut">RUT</label>
+          <div class="col-8">
+              <div class="input-group">
+                  <div class="input-group-prepend">
+                      <div class="input-group-text">
+                          <i class="fa fa-id-card" aria-hidden="true"></i>
+                      </div>
+                  </div>
+                  <select name="RUT" id="rut" onchange="actualizarCampos()">
+                      <option value="" selected>Seleccione Docente</option>
+                      {% for d in docentes %}
+                          <option value="{{ d.rut }}">{{ d.rut }}</option>
+                      {% endfor %}
+                  </select>
+              </div>
+          </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-4 col-form-label" for="nombre">Nombre</label>
+            <div class="col-8">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                    <input id="nombre" name="nombre" type="text" class="form-control" value="{{ docente.nombre }}" required="required">
+                </div>
+            </div>
+        </div>
+      
+        <div class="form-group row">
+          <label class="col-4 col-form-label" for="email">Correo Electrónico</label> 
+          <div class="col-8">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text">
+                  <i class="fa fa-at"></i>
+                </div>
+              </div> 
+              <input id="email" name="email" type="email" required="required" class="form-control" value="{{ docente.email }}">
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="areaAcademica" class="col-4 col-form-label">Área Académica</label> 
+          <div class="col-8">
+            <select id="areaAcademica" name="areaAcademica" class="custom-select">
+              <option value="Seleccione">Seleccione</option>
+              <option value="Hotelería, Turismo Y Gastronomía" {% if docente.areaAcademica == "Hotelería, Turismo Y Gastronomía" %} selected {% endif %}>Hotelería, Turismo Y Gastronomía</option>
+              <option value="Humanidades" {% if docente.areaAcademica == "Humanidades" %} selected {% endif %}>Humanidades</option>
+              <option value="Salud" {% if docente.areaAcademica == "Salud" %} selected {% endif %}>Salud</option>
+              <option value="Construcción" {% if docente.areaAcademica == "Construcción" %} selected {% endif %}>Construcción</option>
+              <option value="Logística" {% if docente.areaAcademica == "Logística" %} selected {% endif %}>Logística</option>
+              <option value="Mecánica" {% if docente.areaAcademica == "Mecánica" %} selected {% endif %}>Mecánica</option>
+              <option value="Automatización Y Robótica" {% if docente.areaAcademica == "Automatización Y Robótica" %} selected {% endif %}>Automatización Y Robótica</option>
+              <option value="Diseño E Industria Digital" {% if docente.areaAcademica == "Diseño E Industria Digital" %} selected {% endif %}>Diseño E Industria Digital</option>
+              <option value="Electricidad, Electrónica Y Telecomunicaciones" {% if docente.areaAcademica == "Electricidad, Electrónica Y Telecomunicaciones" %} selected {% endif %}>Electricidad, Electrónica Y Telecomunicaciones</option>
+              <option value="Tecnologías De Información Y Ciberseguridad" {% if docente.areaAcademica == "Tecnologías De Información Y Ciberseguridad" %} selected {% endif %}>Tecnologías De Información Y Ciberseguridad</option>
+
+            </select>
+          </div>
+        </div> 
+        <div class="form-group row">
+          <div class="offset-4 col-8">
+            <button name="submit" type="submit" class="btn btn-primary">Actualizar Docente</button>
+          </div>
+        </div>
+    </form>
+</div>
+
+
+<script>
+  function actualizarCampos() {
+    var seleccion = document.getElementById("rut");
+    var rutSeleccionado = seleccion.value;
+
+    console.log('RUT seleccionado:', rutSeleccionado);
+    var seleccion = document.getElementById("rut");
+    var rutSeleccionado = seleccion.value;
+
+    // Verificar si se ha seleccionado "Seleccione Docente"
+    if (rutSeleccionado === "") {
+        return;
+    }
+
+    // Realizar una solicitud AJAX para obtener los detalles del docente
+    fetch(`/obtener_detalle_docente/${rutSeleccionado}/`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('La solicitud no fue exitosa');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Imprime los datos en la consola para verificar que se obtuvieron correctamente
+            console.log('Datos del docente:', data);
+
+            // Actualizar los campos del formulario con la información del docente seleccionado
+            document.getElementById("nombre").value = data.nombre;
+            document.getElementById("email").value = data.email;
+            document.getElementById("areaAcademica").value = data.areaAcademica;
+            // En caso de más campos, agregar aquí *w*
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+
+</script>
+  
+  
+  {% endblock %}

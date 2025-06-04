@@ -1,0 +1,31 @@
+{% extends '../index_master.html' %}
+
+{% block content %}
+<div class="right_col" role="main">
+    <h1>Listar Docentes</h1>
+    <div class="table-responsive">
+        <table class="table table-hover border-warning">
+            <thead>
+                <tr>
+                    <th scope="row">#</th>
+                    <th scope="row">Nombre</th>
+                    <th scope="row">RUT</th>
+                    <th scope="row">Área Académica</th>
+                    <th scope="row">Correo Electrónico</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for d in docentes %}
+                <tr>
+                    <th scope="col">{{ forloop.counter }}</th>
+                    <td>{{ d.nombre }}</td>
+                    <td>{{ d.rut }}</td>
+                    <td>{{ d.areaAcademica }}</td>
+                    <td>{{ d.email }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

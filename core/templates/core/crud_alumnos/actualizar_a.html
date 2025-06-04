@@ -1,0 +1,104 @@
+{% extends '../index_master.html' %}
+
+{% block content %}
+<div class="right_col" role="main">
+    <h1>Actualizar Alumno</h1>
+    <form id="actualizarAlumnos" method="POST" action="{% url 'actualizarAlumnos' %}" >
+        {% csrf_token %}
+
+        <div class="form-group row">
+          <label class="col-4 col-form-label" for="rut">RUT</label>
+          <div class="col-8">
+              <div class="input-group">
+                  <div class="input-group-prepend">
+                      <div class="input-group-text">
+                          <i class="fa fa-id-card" aria-hidden="true"></i>
+                      </div>
+                  </div>
+                  <select name="rut" id="rut" onchange="actualizarCampos()">
+                      <option value="" selected>Seleccione Alumno</option>
+                      {% for a in alumnos %}
+                          <option value="{{ a.rut }}">{{ a.rut }}</option>
+                      {% endfor %}
+                  </select>
+              </div>
+          </div>
+        </div>
+        <div class="form-group row">
+            <label for="nombre" class="col-3 col-form-label">Nombre</label> 
+            <div class="col-9">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">
+                    <i class="fa fa-address-card"></i>
+                  </div>
+                </div> 
+                <input id="nombre" name="nombre" type="text" required="required" class="form-control">
+              </div>
+            </div>
+        </div>
+        
+        <div class="form-group row">
+          <label class="col-3 col-form-label" for="carrera">Carrera</label> 
+          <div class="col-9">
+            <input id="carrera" name="carrera" type="text" class="form-control" required="required">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="email" class="col-3 col-form-label">Correo Electrónico</label> 
+          <div class="col-9">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text">
+                  <i class="fa fa-at"></i>
+                </div>
+              </div> 
+              <input id="email" name="email" type="email" required="required" class="form-control">
+            </div>
+          </div>
+        </div> 
+        <div class="form-group row">
+          <div class="offset-3 col-9">
+            <button name="submit" type="submit" class="btn btn-primary">Actualizar Alumno</button>
+          </div>
+        </div>
+    </form>
+</div>
+<script>
+  function actualizarCampos() {
+    var seleccion = document.getElementById("rut");
+    var rutSeleccionado = seleccion.value;
+
+    console.log('rut seleccionado:', rutSeleccionado);
+    var seleccion = document.getElementById("rut");
+    var rutSeleccionado = seleccion.value;
+
+    // Verificar si se ha seleccionado "Seleccione Docente"
+    if (rutSeleccionado === "") {
+        return;
+    }
+
+    // Realizar una solicitud AJAX para obtener los detalles del docente
+    fetch(`/obtener_detalle_alumno/${rutSeleccionado}/`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('La solicitud no fue exitosa');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Imprime los datos en la consola para verificar que se obtuvieron correctamente
+            console.log('Datos del alumno:', data);
+
+            // Actualizar los campos del formulario con la información del docente seleccionado
+            document.getElementById("nombre").value = data.nombre;
+            document.getElementById("email").value = data.email;
+            document.getElementById("carrera").value = data.carrera;
+            // En caso de más campos, agregar aquí *w*
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+
+</script>
+{%endblock%}

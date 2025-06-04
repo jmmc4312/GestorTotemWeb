@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'core/css/about.css'%}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'core/css/estilo1.css'%}"/>
+    <script src="https://kit.fontawesome.com/24b0b2f005.js" crossorigin="anonymous"></script>
+   <!-- <link rel="stylesheet" type="text/css" href="{% static 'core/css/login.css'%}"/> --> 
+    <title>Gestor Tótem Docente</title>
+</head>
+<body>
+    <header class="main-header">  
+        <nav class="main_nav">
+            <div class="container container--flex">
+                <div class="logo">
+                    <img src="{% static 'core/img/logo.png'%}">
+                </div>
+                <h1 class="textlogo">FabLab</h1>
+                <span class="icon-menu" id="btnmenu"></span>
+                <ul class="menu" id="menu">
+                    <li class="menu__item"><a href="#diseno-section" class="menu__link">Diseño de Tótem</a></li>
+                    <li class="menu__item"><a href="#ramos-section" class="menu__link">Curso y Alumno</a></li>
+                    <li class="menu__item"><a href="#asigna-section" class="menu__link">Asignación de Beneficio</a></li>
+                </ul>                
+                <a href="{%url 'login'%}" class="logout">
+                    <span >Cerrar Sesión </span>
+                    <i class="fa-solid fa-right-from-bracket" style="color: #ff7300;"></i>
+                </a>
+            </div>
+        </nav>
+    </header>
+    {%block content%}  {%endblock%}
+
+    {%block footer %}{%endblock%}
+    <footer class="main-footer">
+        <div class="container container--flex">
+            <div class="column column--33">
+                <h2 class="column__title">Contáctenos</h2>
+                <p class="column__txt">+569 12345678</p>
+                <p class="column__txt">fabinacapconcetalcahuano@gmail.com</p>
+                <p class="column__txt">Autop. Concepción - Talcahuano 7421, Talcahuano, Bío Bío</p>
+            </div>
+            <div class="column column--33">
+                <h2 class="column__title">Redes Sociales</h2>
+                <p class="column__txt"><a href="" class="icon-facebook">Facebook</a></p>
+                <p class="column__txt"><a href="" class="icon-twitter">Twitter</a></p>
+                <p class="column__txt"><a href="" class="icon-instagram">Instagram</a></p>               
+            </div>
+            <div class="column column--33">
+                <h2 class="column__title">Colaboradores</h2>
+                <div class="logo-inacap">
+                    <a href="https://portales.inacap.cl/sedes/concepcion-talcahuano/">
+                        <img src="{% static 'core/img/logo-inacap.jpg'%}" >
+                    </a>
+                </div>
+                
+            </div>
+            
+        </div>
+        <p class="copy">@ 2023 FABLAB | Todos los derechos reservados</p>
+    </footer>
+<script src="{% static 'core/js/menu.js'%}"></script>
+
+</body>
+</html>
