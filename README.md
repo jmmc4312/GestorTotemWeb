@@ -28,6 +28,15 @@ intranet/
 ├── db.sqlite3
 ├── manage.py
 └── README.md
+
+
+## Diseños de UI
+
+Visualización de las interfaces diseñadas para este proyecto en el siguiente enlace:
+
+🔗 [Ver vistas y prototipos de la interfaz](https://inacapmailcl-my.sharepoint.com/:f:/g/personal/jose_munoz206_inacapmail_cl/EiOHxnc2ajJMreK9xmfrXRQB_Zu1_O5HkHn6o1jgJ8BfJg?e=mAijtU)
+
+
 ## 🚀 Cómo ejecutar el proyecto localmente
 
 ```bash
